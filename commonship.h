@@ -1,7 +1,6 @@
 //
 // Created by Duru Irmak Öztürk on 13.03.2024.
 //
-
 #ifndef UNTITLED_COMMONSHIP_H
 #define UNTITLED_COMMONSHIP_H
 #include "spaceships.h"
@@ -9,7 +8,7 @@
 class commonShip:public Spaceships {
 public:
     //CONSTRUCTOR
-    //commonShip():Spaceships(double _damageCoef):damageCoef{_damageCoef}{}
+    commonShip(double _damageCoef):Spaceships(_damageCoef){}
 
     //UPDATES
     int updateHealthDamage10(int& _health) override;
