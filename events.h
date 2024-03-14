@@ -11,38 +11,38 @@
 #include "strongship.h"
 #ifndef UNTITLED_EVENTS_H
 #define UNTITLED_EVENTS_H
-class Events{
+class Events {
 public:
-
-    static void start_game(){
+    //GAME STARTER
+    static void start_game() {
          int counter{0};
          int max_event{5};
-        do{
-            int a= (rand() %3 + 1);//random  sayı gelecek
-            switch(a){
+        do {
+            int randomEvent = (rand() %3 + 1);
+            switch(randomEvent){
                 case 1: //asteroid
-                    secilen_gemi()->asteroid();
+                    playersShip()->asteroid();
                     counter++;
                     break;
-                case 2: //pirate
-                    secilen_gemi()->piratesChoose();
+                case 2: //pirates
+                    playersShip()->pirates();
                     counter++;
                     break;
                 case 3: //abandonedPlanet
-                    secilen_gemi()->abandonedPlanet();
+                    playersShip()->abandonedPlanet();
                     counter++;
                     break;
                 default:
                     break;
             }
-
-        }while(counter<max_event&&secilen_gemi()->fuel>0);
-        secilen_gemi()->puan_hesabi();
+        } while(counter<max_event&&playersShip()->fuel>0);
+        playersShip()->puan_hesabi();
     }
 
-    static std::shared_ptr<Spaceships> secilen_gemi() {
-        static std::shared_ptr<Spaceships> secilen_gemi;
-        if (!secilen_gemi) {
+    //SHIP SELECTOR
+    static std::shared_ptr<Spaceships> playersShip() {
+        static std::shared_ptr<Spaceships> playersShip;
+        if (!playersShip) {
             int gemi{0};
             std::cout<<"      _________\n"
                        "      (=========)\n"
@@ -67,35 +67,29 @@ public:
                        "|||||||         |||||||\n"
                        "-------         -------\n"
                        " (~~~)           (~~~)";
-            std::cout<<"\nChoose a spaceship for your journey: Common ship (1) Fast ship (2) Strong ship (3)\n";
+            std::cout<<"\nYolculuğuna başlamak için bir gemi seç: Normal gemi (1) Hızlı gemi (2) Güçlü gemi (3)\n";
             std::cin>>gemi;
             switch (gemi) {
                 case 1:
-                    secilen_gemi = std::make_shared<commonShip>();
+                    playersShip = std::make_shared<commonShip>();
                     break;
                 case 2:
-                    secilen_gemi = std::make_shared<speedShip>();
+                    playersShip = std::make_shared<speedShip>();
                     break;
                 case 3:
-                    secilen_gemi = std::make_shared<strongShip>();
+                    playersShip = std::make_shared<strongShip>();
                     break;
                 default:
-                    std::cout<<"gecersiz gemi secimi yaptiniz\n";
+                    std::cout<<"Geçersiz gemi seçimi.\n\n";
                     //Spaceships::secilen_gemi();
                     break;
             }
         }
-
-        return secilen_gemi;
+        return playersShip;
     }
-
-
-
 
 private:
 protected:
-
-
 
 };
 
