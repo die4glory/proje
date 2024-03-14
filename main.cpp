@@ -9,6 +9,5 @@ int main() {
     std::shared_ptr<Spaceships>secilen_gemi;
     Events::start_game();
 
-
     return 0;
 }
