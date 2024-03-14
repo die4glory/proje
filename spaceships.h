@@ -4,9 +4,8 @@
 
 #ifndef COSMIC_VOYAGER_CAPTAIN_H
 #define COSMIC_VOYAGER_CAPTAIN_H
-#include "cstdlib"
+#include <cstdlib>
 #include <iostream>
-
 
 //çözülecek sorunlar:
 //destructorlar yapılacak
@@ -16,28 +15,55 @@
 //altın 0 ise pazarlık çıkmayacak
 //ifadeleri düzenlicez
 //declaration ve definitionları ayırcaz
-//display fonksiyonu yazıcaz
+//display fonksiyonu yazıcaz!!!
+//gecersiz gemi seciminde secim fonksiyonunu tekrar cağır
 
-class Spaceships{
+class Spaceships {
 public:
-    Spaceships(double _katsayi) :katsayi{_katsayi}{}
+    explicit Spaceships(double _damageCoef) :damageCoef{_damageCoef}{}
 
+    //UPDATES
     virtual int updateHealthDamage10(int& _health) = 0;
     virtual int updateHealthDamage30(int&  _health)=0;
 
-    int getMoney(int _money) {
+    int earnMoney(int _money) {
         money += prize;
         return money;
     }
+
     int loseMoney(int _money) {
-        int kayipMiktari = (rand() % 3 + 1);
-        kayipMiktari=kayipMiktari*10;
-        return money-=kayipMiktari;
+        int moneyLoss = (rand() % 3 + 1);
+        moneyLoss=moneyLoss*10;
+        return money-=moneyLoss;
 
     }
 
+    int updateFuel(int& _fuel){
+        if(fuel>=34) {
+            fuel -= spentFuel;
+            return fuel;
+        }
+        else {
+            fuel=0;
+        }
+    }
+
+    //EVENTS
     virtual void asteroid()=0;
-    void piratesChoose(){ //3 secenek kac savas pazarlık
+
+    void abandonedPlanet(){
+        int oran = (rand() % 2) == 0 ? 10: 0;
+        if(oran>0){
+            std::cout<<"Terk edilmiş bir gezegende yerde 10 altın buldun! Şanslı günündesin!\n\n";
+            earnMoney(money); //!!!!!!!
+        }
+        else {
+            std::cout<<"Terk edildiğini sandığın gezegene geldiğinde yanıldığını anladın ve...\n\n";
+            pirates();
+        }
+    }
+
+    void pirates() { //3 secenek kac savas pazarlık
         std::cout<<"     _                      _______                      _\n"
                    "  _dMMMb._              .adOOOOOOOOOba.              _,dMMMb_\n"
                    " dP'  ~YMMb            dOOOOOOOOOOOOOOOb            aMMP~  `Yb\n"
@@ -58,7 +84,7 @@ public:
                    "     `'                  `OObNNNNNdOO'                   `'\n"
                    "                           `~OOOOO~'         ";
         if (fuel>=33) {
-            std::cout << "Space pirates attack! Flee (0), fight (1) or negotiate (2)!\n";
+            std::cout << "\nUzay korsanlarıyla karşılaştın! Kaç (0), savaş (1) ya da pazarlık et (2)!\n";
             int choice{0};
             std::cin >> choice;
             switch(choice){
@@ -72,20 +98,17 @@ public:
                     debate();
                 break;
                 default:
-                    std::cout<<"gecersiz secenek\n";
-                    piratesChoose();
+                    std::cout<<"Sadece 3 seçeneğin var!\n\n";
+                    pirates();
                     break;
 
             }
         }
         else if(fuel<33) {
-            std::cout << "yakıt yetersiz kac(0) ,savas(1) ya da pazarlık et(2)!\n";
+            std::cout << "\nUzay korsanlarıyla karşılaştın! Kaçmak için yeterli yakıtın yok. Savaş (1) ya da pazarlık et (2)!\n";
             int choice{1};
             std::cin >> choice;
             switch (choice) {
-                case 0://kac
-                    run();
-                    break;
                 case 1: //savas
                     fight();
                     break;
@@ -93,57 +116,42 @@ public:
                     debate();
                     break;
                 default:
-                    std::cout << "gecersiz secenek\n";
-                    piratesChoose();
+                    std::cout << "Sadece 2 seçeneğin var!\n\n";
+                    pirates();
                     break;
             }
         }
     }
+
+    //ACTIONS
     virtual void run()=0;
     virtual void fight()=0;
 
     void debate(){
-        int ucret = rand() % 3 + 1;
-        money-=10*ucret;
+        /*int ucret = rand() % 3 + 1;
+        money-=10*ucret;*/
+        loseMoney(money);
         if (money<0){
-           std::cout<<"yeterli altın yok";
-           piratesChoose();
-        }
-    }
-    void abandonedPlanet(){
-        int oran = (rand() % 2) == 0 ? 10: 0;
-        if(oran>0){
-            std::cout<<"10 altın kazandın\n";
-            getMoney(money); //!!!!!!!
-        }
-        else {
-            std::cout<<"uzay korsanları cıkacak\n";
-            piratesChoose();
+           std::cout<<"Pazarlık etmek için cebinde beş kuruş olmadığını fark ettin.\n\n";
+           pirates();
         }
     }
 
-    int updateFuel(int& _fuel){
-        if(fuel>=34) {
-            fuel -= spentFuel;
-            return fuel;
-        }
-        else{
-            fuel=0;
-        }
-    }
-
+    //GAME ENDING
     void puan_hesabi(){
-        std::cout<<"oyun bitti puanınız :" << ((fuel*5)+(health*10)+(money*10));
+        std::cout<<"Oyun sona erdi. Puanınız :" << ((fuel*5)+(health*10)+(money*10));
     }
 
     int fuel{100};
-private:
-protected:
-    const int prize{10};
-    int health{100};
-    const double katsayi;
-    int money{0};
 
+protected:
+    //ATTRIBUTIONS
+    int money{0};
+    int health{100};
+    double damageCoef{0};////
+
+    //CONSTANTS
+    const int prize{10};
     const int spentFuel{33};
     const int damage{10};
     const int damage_{30};
