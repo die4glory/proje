@@ -26,7 +26,7 @@ public:
         }
     }
 
-    void asteroid(){
+    void asteroid() override {
         int hasar = (rand() % 4) == 0&1&2 ? 10: 0;
         std::cout<<"                      .:'\n"
                    "         ....     _.::'\n"
@@ -45,7 +45,7 @@ public:
             updateFuel(fuel);
         }
     }
-    void run(){
+    void run() override {
         int kacma_olasılık =  (rand() % 4) == 0&1&2 ? 10: 0;
         if(kacma_olasılık>0){
             updateFuel(fuel);// hocam kacamasa bile yakit harcanir seklinde yaptik
