@@ -4,8 +4,7 @@
 
 #ifndef COSMIC_VOYAGER_CAPTAIN_H
 #define COSMIC_VOYAGER_CAPTAIN_H
-#include <cstdlib>
-#include <iostream>
+#include "spaceships.h"
 
 class Spaceships {
 public:
