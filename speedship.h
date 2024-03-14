@@ -29,7 +29,7 @@ public:
 
     void asteroid() override {
         int asteroidDamage = (rand() % 4) == 0 ? 10 : 0;
-        std::cout<<"Asteroid kuşağından geçiyorsun!\n\n";
+        std::cout<<"\nAsteroid kuşağından geçiyorsun!\n\n";
         std::cout<<"                      .:'\n"
                    "         ....     _.::'\n"
                    "       .:-\"\"-:.  (_.'\n"
@@ -41,10 +41,12 @@ public:
         if (asteroidDamage > 0) {
             updateHealthDamage10(health);
             std::cout<<"\nAsteroidlerden birine çarpıp 15 hasar aldın.\n\n";
+            displayStatus();
         }
         else {
-            std::cout<<"\nAsteroid kuşağından hasar almadan geçtin. Yakıtın azaldı.\n\n";
+            std::cout<<"\nAsteroid kuşağından hasar almadan geçtin. Yakıtın azaldı.\n";
             updateFuel(fuel);
+            displayStatus();
         }
     }
     void run() override {
@@ -53,10 +55,12 @@ public:
             updateFuel(fuel);// hocam kacamasa bile yakit harcanir seklinde yaptik
             std::cout<<"Yakıtın azaldı. Tam kaçabildiğini sandığın anda...\n\n";
             pirates();
+            displayStatus();
         }
         else {
             updateFuel(fuel);
             std::cout<<"Korsanlara izini kaybettirdin! Yakıtın azaldı.\n\n";
+            displayStatus();
         }
     }
     void fight() override {
@@ -67,6 +71,7 @@ public:
         else {
             std::cout<<"Savaşı kaybettin. 45 hasar aldın.\n\n";
             updateHealthDamage30(health);
+            displayStatus();
         }
     }
 
