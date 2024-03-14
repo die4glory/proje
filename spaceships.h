@@ -54,11 +54,27 @@ public:
     void abandonedPlanet(){
         int oran = (rand() % 2) == 0 ? 10: 0;
         if(oran>0){
-            std::cout<<"Terk edilmiş bir gezegende yerde 10 altın buldun! Şanslı günündesin!\n\n";
+            std::cout<<"⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n"
+                       "⠀⠀⠀⠀⠀⠀⢯⠙⠩⠀⡇⠊⠽⢖⠆⠀⠀⠀⠀⠀\n"
+                       "⠀⠀⠀⠀⠀⠀⠀⠱⣠⠀⢁⣄⠔⠁⠀⠀⠀⠀⠀⠀\n"
+                       "⠀⠀⠀⠀⠀⠀⠀⠀⣷⣶⣾⣾⠀⠀⠀⠀⠀⠀⠀⠀\n"
+                       "⠀⠀⠀⠀⠀⠀⢀⡔⠙⠈⢱⡟⣧⠀⠀⠀⠀⠀⠀⠀\n"
+                       "⠀⠀⠀⠀⠀⡠⠊⠀⠀⣀⡀⠀⠘⠕⢄⠀⠀⠀⠀⠀\n"
+                       "⠀⠀⠀⢀⠞⠀⠀⢀⣠⣿⣧⣀⠀⠀⢄⠱⡀⠀⠀⠀\n"
+                       "⠀⠀⡰⠃⠀⠀⢠⣿⠿⣿⡟⢿⣷⡄⠀⠑⢜⢆⠀⠀\n"
+                       "⠀⢰⠁⠀⠀⠀⠸⣿⣦⣿⡇⠀⠛⠋⠀⠨⡐⢍⢆⠀\n"
+                       "⠀⡇⠀⠀⠀⠀⠀⠙⠻⣿⣿⣿⣦⡀⠀⢀⠨⡒⠙⡄\n"
+                       "⢠⠁⡀⠀⠀⠀⣤⡀⠀⣿⡇⢈⣿⡷⠀⠠⢕⠢⠁⡇\n"
+                       "⠸⠀⡕⠀⠀⠀⢻⣿⣶⣿⣷⣾⡿⠁⠀⠨⣐⠨⢀⠃\n"
+                       "⠀⠣⣩⠘⠀⠀⠀⠈⠙⣿⡏⠁⠀⢀⠠⢁⡂⢉⠎⠀\n"
+                       "⠀⠀⠈⠓⠬⢀⣀⠀⠀⠈⠀⠀⠀⢐⣬⠴⠒⠁⠀⠀\n"
+                       "⠀⠀⠀⠀⠀⠀⠀⠈⠉⠉⠉⠉⠉⠀⠀⠀⠀⠀⠀⠀";
+            std::cout<<"\nTerk edilmiş bir gezegende yerde 10 altın buldun! Şanslı günündesin!\n\n";
             earnMoney(money); //!!!!!!!
+            displayStatus();
         }
         else {
-            std::cout<<"Terk edildiğini sandığın gezegene geldiğinde yanıldığını anladın ve...\n\n";
+            std::cout<<"\nTerk edildiğini sandığın gezegene geldiğinde yanıldığını anladın ve...\n\n";
             pirates();
         }
     }
@@ -130,11 +146,19 @@ public:
     void debate(){
         /*int ucret = rand() % 3 + 1;
         money-=10*ucret;*/
-        loseMoney(money);
         if (money<0){
            std::cout<<"Pazarlık etmek için cebinde beş kuruş olmadığını fark ettin.\n\n";
            pirates();
         }
+        else {
+            loseMoney(money);
+            displayStatus();
+        }
+    }
+
+    //DISPLAY
+    void displayStatus(){
+        std::cout<<"Gemi sağlığı: "<<health<<" Depodaki yakıt: "<<fuel<<" Toplam altın: "<<money<<"\n";
     }
 
     //GAME ENDING
