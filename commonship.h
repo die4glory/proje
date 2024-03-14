@@ -6,13 +6,13 @@
 #define UNTITLED_COMMONSHIP_H
 #include "spaceships.h"
 
-class commonShip:public Spaceships{
+class commonShip:public Spaceships {
 public:
     commonShip(): Spaceships(1){}
 
-    int updateHealthDamage10(int& _health) override{
+    int updateHealthDamage10(int& _health) override {
        if (health>=0) {
-           health -= damage * katsayi;
+           health -= damage*damageCoef;
            return health;
        }
        else {
@@ -20,9 +20,10 @@ public:
            return health;
        }
     }
-    int updateHealthDamage30(int& _health) override{
+
+    int updateHealthDamage30(int& _health) override {
         if (health>=0) {
-            health -= damage_ * katsayi;
+            health -= damage_*damageCoef;
             return health;
         }
         else {
@@ -31,56 +32,56 @@ public:
         }
     }
 
-    void asteroid(){
-        int hasar = (rand() % 4) == 0&&1 ? 10 : 0;
+    void asteroid() override {
+        int asteroidDamage = (rand() % 4) == 0&&1 ? 10 : 0;
+        std::cout<<"Asteroid kuşağından geçiyorsun!\n\n";
         std::cout<<"                      .:'\n"
                    "         ....     _.::'\n"
                    "       .:-\"\"-:.  (_.'\n"
                    "     .:/      \\:.\n"
                    "     :|        |:\n"
                    "     ':\\      /:'\n"
-                   " jgs  '::-..-::'\n"
+                   "      '::-..-::'\n"
                    "        `''''`";
-        if(hasar>0){
+        if(asteroidDamage>0) {
             updateHealthDamage10(health);
-            std::cout<<"gemi meteor yagmurundan kacamadı\n";
-            std::cout<<"gemi 10 hasar aldi\n";
+            std::cout<<"\nAsteroidlerden birine çarpıp 10 hasar aldın.\n\n";
         }
-        else{
-            std::cout<<"gemi astreoit yagmurundan kacabildi\n";
+        else {
+            std::cout<<"\nAsteroid kuşağından hasar almadan geçtin.Yakıtın azaldı.\n\n";
             updateFuel(fuel);
         }
     }
-    void run() {
+
+    void run() override {
         updateFuel(fuel);
-        int kacma_olasilik = (rand() % 4) == 0 && 1 ? 10 : 0;
-        if (kacma_olasilik > 0) {
+        int oddsOfFlee = (rand() % 4) == 0 && 1 ? 10 : 0;
+        if (oddsOfFlee > 0) {
             updateFuel(fuel);// hocam kacamasa bile yakit harcanir seklinde yaptik
-            std::cout << "kacamadın. uzay korsanlarıyla tekrar karsılastın\n";
-            piratesChoose();
-        } else {
+            std::cout<<"Yakıtın azaldı. Tam kaçabildiğini sandığın anda...\n\n";
+            pirates();
+        }
+        else {
             updateFuel(fuel);
-            std::cout << "kactın\n";
-
+            std::cout<<"Korsanlara izini kaybettirdin! Yakıtın azaldı.\n\n";
         }
     }
-    void fight() override{
-        int zaferOlasilik = (rand() % 4) == 0&&1 ? 10 : 0;
-        if (zaferOlasilik>0){ //kazandin
-            std::cout<<"savası kazandın\n";
+
+    void fight() override {
+        int oddsOfWin = (rand() % 4) == 0&&1 ? 10 : 0;
+        if (oddsOfWin>0) {
+            std::cout<<"Savaşın galibi sensin!\n\n";
 
         }
-        else { //kaybettin
-            std::cout<<"savası kaybettin\n";
+        else {
+            std::cout<<"Savaşı kaybettin. 30 hasar aldın.\n\n";
             updateHealthDamage30(health);
 
         }
-
-
     }
 
-
-
+private:
+protected:
 
 };
 
