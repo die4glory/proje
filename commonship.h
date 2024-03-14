@@ -8,7 +8,7 @@
 class commonShip:public Spaceships {
 public:
     //CONSTRUCTOR
-    commonShip(double _damageCoef):Spaceships(_damageCoef){}
+    commonShip(double _damageCoef):Spaceships(1){}
 
     //UPDATES
     int updateHealthDamage10(int& _health) override;
